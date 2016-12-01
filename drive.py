@@ -23,9 +23,9 @@ def turnOffMotors():
 atexit.register(turnOffMotors)
 
 ################################# DC motor test!
-mBL = mh.getMotor(1)
+mFL = mh.getMotor(1)
 # mBL = mh.getMotor(4)
-mBR = mh.getMotor(3)
+mFR = mh.getMotor(3)
 # mFR = mh.getMotor(2)
 
 
@@ -38,9 +38,9 @@ def wakeup(m):
 
 
 # wakeup(mFL)
-wakeup(mBL)
+wakeup(mFL)
 # wakeup(mFR)
-wakeup(mBL)
+wakeup(mFL)
 
 
 def gof():
@@ -96,27 +96,28 @@ def stop():
 
 def forward(speed, dur):
 	print "Forward! "
-	mR.run(Adafruit_MotorHAT.FORWARD)
-	mL.run(Adafruit_MotorHAT.FORWARD)
-	mR.setSpeed(speed)
-	mL.setSpeed(speed)
+	mFR.run(Adafruit_MotorHAT.FORWARD)
+	mFL.run(Adafruit_MotorHAT.FORWARD)
+	mFR.setSpeed(speed)
+	mFL.setSpeed(speed)
+        print "DSDASDSD"
 	time.sleep(dur)
 
-	mL.run(Adafruit_MotorHAT.RELEASE)
-	mR.run(Adafruit_MotorHAT.RELEASE)
+	mFL.run(Adafruit_MotorHAT.RELEASE)
+	mFR.run(Adafruit_MotorHAT.RELEASE)
 	return ''
 
 
 def backward(speed, dur):
 	print "Backward! "
-	mR.run(Adafruit_MotorHAT.BACKWARD)
-	mL.run(Adafruit_MotorHAT.BACKWARD)
-	mR.setSpeed(speed)
-	mL.setSpeed(speed)
+	mFR.run(Adafruit_MotorHAT.BACKWARD)
+	mFL.run(Adafruit_MotorHAT.BACKWARD)
+	mFR.setSpeed(speed)
+	mFL.setSpeed(speed)
 	time.sleep(dur)
 
-	mL.run(Adafruit_MotorHAT.RELEASE)
-	mR.run(Adafruit_MotorHAT.RELEASE)
+	mFL.run(Adafruit_MotorHAT.RELEASE)
+	mFR.run(Adafruit_MotorHAT.RELEASE)
 	return ''
 
 
@@ -226,7 +227,7 @@ def latest():
 #	else:
 #		filename = 'images/img'+img_num+'.jpg'
 
-return send_file(filename, mimetype='image/jpg')
+#return send_file(filename, mimetype='image/jpg')
 
 
 @app.route('/data')
@@ -263,4 +264,5 @@ def video_feed():
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == "__main__":
-    app.run()
+#    app.run()
+    app.run(host= '0.0.0.0')
