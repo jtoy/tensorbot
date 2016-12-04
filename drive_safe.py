@@ -5,6 +5,7 @@ def do(cmd):
     p =subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
 from random import random
+import random
     
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 
@@ -18,12 +19,12 @@ import time
 
 GPIO.setmode(GPIO.BCM)
 
-TRIG = [23, 17, 22]
-ECHO = [24, 18, 27]
+TRIG = [24,22]
+ECHO = [23,27]
 
 
 def setup():
-    for i in range(3):
+    for i in range(len(TRIG)):
         GPIO.setup(TRIG[i],GPIO.OUT)
         GPIO.setup(ECHO[i],GPIO.IN)
         GPIO.output(TRIG[i], False)
@@ -75,18 +76,18 @@ mh = Adafruit_MotorHAT(addr=0x60)
 # recommended for auto-disabling motors on shutdown!
 def turnOffMotors():
 	mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-	mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+	#mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
 	mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-	mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+	#mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
         GPIO.cleanup()
         
 atexit.register(turnOffMotors)
 
 ################################# DC motor test!
 mFL = mh.getMotor(1)
-mBL = mh.getMotor(2)
-mBR = mh.getMotor(3)
-mFR = mh.getMotor(4)
+#mBL = mh.getMotor(2)
+#mBR = mh.getMotor(3)
+mFR = mh.getMotor(3)
 
 def wakeup(m):
         # set the speed to start, from 0 (off) to 255 (max speed)
@@ -97,31 +98,31 @@ def wakeup(m):
 
 
 wakeup(mFL)
-wakeup(mBL)
+#wakeup(mBL)
 wakeup(mFR)
-wakeup(mBL)
+#wakeup(mBL)
 setup()
 
 def gof():
-        mBR.run(Adafruit_MotorHAT.BACKWARD)
-        mBL.run(Adafruit_MotorHAT.BACKWARD)
-        mFL.run(Adafruit_MotorHAT.BACKWARD)
-        mFR.run(Adafruit_MotorHAT.BACKWARD)
-        mBR.setSpeed(200)
-        mBL.setSpeed(200)
+        #mBR.run(Adafruit_MotorHAT.BACKWARD)
+        #mBL.run(Adafruit_MotorHAT.BACKWARD)
+        mFL.run(Adafruit_MotorHAT.FORWARD)
+        mFR.run(Adafruit_MotorHAT.FORWARD)
+        #mBR.setSpeed(200)
+        #mBL.setSpeed(200)
         mFR.setSpeed(200)
         mFL.setSpeed(200)
 
 def setSpeed(speed):
-    mBR.setSpeed(speed)
-    mBL.setSpeed(speed)
+    #mBR.setSpeed(speed)
+    #mBL.setSpeed(speed)
     mFR.setSpeed(speed)
     mFL.setSpeed(speed)
 
 def backward(speed, dur):
 	print "Backward! "
-	mFR.run(Adafruit_MotorHAT.FORWARD)
-	mFL.run(Adafruit_MotorHAT.FORWARD)
+	mFR.run(Adafruit_MotorHAT.BACKWARD)
+	mFL.run(Adafruit_MotorHAT.BACKWARD)
 	mFR.setSpeed(speed)
 	mFL.setSpeed(speed)
 	time.sleep(dur)
@@ -133,8 +134,8 @@ def backward(speed, dur):
 def stop():
         mFL.run(Adafruit_MotorHAT.RELEASE)
         mFR.run(Adafruit_MotorHAT.RELEASE)
-        mBL.run(Adafruit_MotorHAT.RELEASE)
-        mBR.run(Adafruit_MotorHAT.RELEASE)
+        #mBL.run(Adafruit_MotorHAT.RELEASE)
+        #mBR.run(Adafruit_MotorHAT.RELEASE)
 
 def left(speed, dur):
         print "Left "
@@ -193,7 +194,7 @@ while(1==1):
 	mind = 1000
 	d=[]
 
-	for i in range(3):
+	for i in range(len(TRIG)):
 		d.append( distance(i));
 		if d[i] < mind:
 			mind = d[i]
@@ -224,7 +225,8 @@ while(1==1):
 		else:
 			turnCount+=1
 
-		if d[2] > d[0]:
+		if random.randrange(0,2) == 1:
+		#if d[2] > d[0]:
 			do('echo "turning left." | flite ')
 			left(255, 0.5);
 		else:
