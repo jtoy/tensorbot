@@ -25,3 +25,19 @@ def classify(n):
         do('{ echo "I think I see a "; cat '+dataFile+' |  sed -e \'$ ! s/$/. or maybe a/\'; } | flite')
 
 	do('echo '+suffix+' > images/INDEX')
+def our_classify(path):
+	suffix = str(n)
+	imageFile = 'images/img'+suffix+'.jpg'
+	dataFile = 'images/data'+suffix
+	latestImage = 'images/latest_img.jpg'
+	latestData = 'images/latest_data'
+        do('echo "I\'m thinking." | flite')
+	do('cp /dev/shm/mjpeg/cam.jpg '+imageFile);
+	do('ln -f '+imageFile+' '+latestImage);
+	do('bash run_and_parse_inception.sh '+imageFile+ " " +dataFile)
+
+	do('ln -f '+dataFile+' '+latestData);
+
+        do('{ echo "I think I see a "; cat '+dataFile+' |  sed -e \'$ ! s/$/. or maybe a/\'; } | flite')
+
+	do('echo '+suffix+' > images/INDEX')

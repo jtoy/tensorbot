@@ -91,7 +91,7 @@ mFR = mh.getMotor(3)
 
 def wakeup(m):
         # set the speed to start, from 0 (off) to 255 (max speed)
-        m.setSpeed(150)
+        m.setSpeed(15)
         m.run(Adafruit_MotorHAT.FORWARD);
         # turn on motor
         m.run(Adafruit_MotorHAT.RELEASE);        
