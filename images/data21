@@ -1,0 +1,5 @@
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/client/session.py", line 965, in _do_call
+    return fn
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/client/session.py", line 947, in _run_fn
+    status, run_metadata)
+KeyboardInterrupt
