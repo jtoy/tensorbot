@@ -202,7 +202,7 @@ def maybe_download_and_extract():
 
 
 def main(_):
-  maybe_download_and_extract()
+  #maybe_download_and_extract()
   image = (FLAGS.image_file if FLAGS.image_file else
            os.path.join(FLAGS.model_dir, 'cropped_panda.jpg'))
   run_inference_on_image(image)
