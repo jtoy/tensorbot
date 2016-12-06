@@ -34,6 +34,10 @@ tf.app.flags.DEFINE_integer('num_top_predictions', 5,
 DATA_URL = 'http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz'
 # pylint: enable=line-too-long
 
+sess = tf.Session()
+create_graph()
+softmax_tensor = sess.graph.get_tensor_by_name('softmax:0')
+
 
 class NodeLookup(object):
   """Converts integer node ID's to human readable labels."""
@@ -110,9 +114,6 @@ def create_graph():
     _ = tf.import_graph_def(graph_def, name='')
 
 
-sess = tf.Session() 
-create_graph()
-softmax_tensor = sess.graph.get_tensor_by_name('softmax:0')
 def run_inference_on_image(image):
   image = (FLAGS.image_file if FLAGS.image_file else
            os.path.join(FLAGS.model_dir, 'cropped_panda.jpg'))
@@ -129,7 +130,7 @@ def run_inference_on_image(image):
   predictions = np.squeeze(predictions)
 
   node_lookup = NodeLookup()
-  
+
   top_k = predictions.argsort()[-FLAGS.num_top_predictions:][::-1]
   for node_id in top_k:
 	human_string = node_lookup.id_to_string(node_id)
@@ -137,8 +138,6 @@ def run_inference_on_image(image):
 	print('%s (score = %.5f)' % (human_string, score))
   print "end classification"
   print "new classification"
-  
-
 
 
 if __name__ == '__main__':
@@ -154,4 +153,3 @@ total_n = t1-t0
 total_n2 = t3-t2
 print(total_n)
 print(total_n2)
-

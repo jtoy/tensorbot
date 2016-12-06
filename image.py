@@ -35,6 +35,6 @@ def our_classify(n):
     do('echo "I\'m thinking." | flite')
 	do('cp /dev/shm/mjpeg/cam.jpg ' + imageFile);
 
-	output = run_inference_on_image(image)
+	output = run_inference_on_image(imageFile)
 
     do('{ echo "I think I see a "; cat ' + output + ' |  sed -e \'$ ! s/$/. or maybe a/\'; } | flite')
