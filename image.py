@@ -1,5 +1,5 @@
 import subprocess
-from classify_image import run_inference_on_image
+from classifier import run_inference_on_image
 
 
 def do(cmd):
@@ -32,9 +32,9 @@ def classify(n):
 def our_classify(n):
 	suffix = str(n)
 	imageFile = 'images/img' + suffix + '.jpg'
-    do('echo "I\'m thinking." | flite')
+        do('echo "I\'m thinking." | flite')
 	do('cp /dev/shm/mjpeg/cam.jpg ' + imageFile);
 
 	output = run_inference_on_image(imageFile)
 
-    do('{ echo "I think I see a "; cat ' + output + ' |  sed -e \'$ ! s/$/. or maybe a/\'; } | flite')
+        do('{ echo "I think I see a "; cat ' + output + ' |  sed -e \'$ ! s/$/. or maybe a/\'; } | flite')
