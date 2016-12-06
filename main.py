@@ -1,23 +1,13 @@
-from drive_safe2 import *
 from image import our_classify
-
 import subprocess
-
 from random import random
 import random
-
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
-
 from flask import Flask, render_template, request, Response, send_file
-
 from camera_pi import Camera
-
 import RPi.GPIO as GPIO
-
 import time
-
 import os
-import time
 import atexit
 
 GPIO.setmode(GPIO.BCM)

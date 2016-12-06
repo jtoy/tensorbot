@@ -37,4 +37,6 @@ def our_classify(n):
 
 	output = run_inference_on_image(imageFile)
 
-        do('{ echo "I think I see a "; cat ' + output + ' |  sed -e \'$ ! s/$/. or maybe a/\'; } | flite')
+	do('{ echo "I think I see a " } | flite')
+	for cat, score in output.items():
+		do('{ %s (score = %.5f)  } | flite' % (human_string, score) )
