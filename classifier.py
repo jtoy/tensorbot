@@ -34,9 +34,6 @@ tf.app.flags.DEFINE_integer('num_top_predictions', 5,
 DATA_URL = 'http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz'
 # pylint: enable=line-too-long
 
-sess = tf.Session()
-create_graph()
-softmax_tensor = sess.graph.get_tensor_by_name('softmax:0')
 
 
 class NodeLookup(object):
@@ -132,13 +129,22 @@ def run_inference_on_image(image):
   node_lookup = NodeLookup()
 
   top_k = predictions.argsort()[-FLAGS.num_top_predictions:][::-1]
+  scores = {}
   for node_id in top_k:
 	human_string = node_lookup.id_to_string(node_id)
 	score = predictions[node_id]
+        scores += [{human_string:score}]
+        scores[human_string] = score
+        #scores += [{name:human_string,score:score}]
 	print('%s (score = %.5f)' % (human_string, score))
   print "end classification"
   print "new classification"
+  return scores
 
+
+sess = tf.Session()
+create_graph()
+softmax_tensor = sess.graph.get_tensor_by_name('softmax:0')
 
 if __name__ == '__main__':
   #tf.app.run()
@@ -149,7 +155,7 @@ if __name__ == '__main__':
   t2 = time.time()
   run_inference_on_image("/home/pi/cam.jpg")
   t3 = time.time()
-total_n = t1-t0
-total_n2 = t3-t2
-print(total_n)
-print(total_n2)
+  total_n = t1-t0
+  total_n2 = t3-t2
+  print(total_n)
+  print(total_n2)
