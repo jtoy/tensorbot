@@ -133,7 +133,6 @@ def run_inference_on_image(image):
   for node_id in top_k:
 	human_string = node_lookup.id_to_string(node_id)
 	score = predictions[node_id]
-        scores += [{human_string:score}]
         scores[human_string] = score
 	print('%s (score = %.5f)' % (human_string, score))
   print "end classification"
