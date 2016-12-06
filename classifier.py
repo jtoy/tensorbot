@@ -135,7 +135,6 @@ def run_inference_on_image(image):
 	score = predictions[node_id]
         scores += [{human_string:score}]
         scores[human_string] = score
-        #scores += [{name:human_string,score:score}]
 	print('%s (score = %.5f)' % (human_string, score))
   print "end classification"
   print "new classification"
